@@ -6,6 +6,7 @@ import { auth } from "../middlewares/auth.js";
 const router = Router();
 router.use(auth);
 
+// melihat data pengeluaran pemasukan bulanan
 router.get(
   "/",
   asyncHandler(async (req, res, next) => {
@@ -26,3 +27,31 @@ router.get(
     res.json(rows);
   }),
 );
+
+router.post(
+  "/",
+  asyncHandler(async (req, res) => {
+    const { type, amount, description, tx_date } = req.body;
+
+    if (!["income", "expense"].includes(type) || !amount || amount <= 0) {
+      return res
+        .status(400)
+        .json({ error: "Type (income/expense) & amount > 0 WAJIB!!!" });
+    }
+
+    const [result] = await pool.query(
+      "INSERT INTO tb_transactions (user_id, type, amount, description, tx_date) VALUES (?, ?, ?, ?, ?)",
+      [
+        req.user.id,
+        req.body.type,
+        req.body.amount,
+        req.body.description ?? null,
+        req.body.tx_date ?? null,
+      ],
+    );
+
+    res.status(201).json({ id: result.insertId, type, amount });
+  }),
+);
+
+export default router;
