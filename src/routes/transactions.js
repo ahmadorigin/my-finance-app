@@ -28,6 +28,22 @@ router.get(
   }),
 );
 
+router.get(
+  "/:id",
+  asyncHandler(async (req, res) => {
+    const [rows] = await pool.query(
+      `SELECT id, user_id, type, amount, description, 
+            DATE_FORMAT(tx_date, '%Y-%m-%d') AS tx_date, created_at 
+      FROM tb_transactions WHERE id = ? AND user_id = ?`,
+      [req.params.id, req.user.id],
+    );
+
+    if (!rows.length)
+      return res.status(404).json({ error: "Transaksi tidak ditemukan..." });
+    res.json(rows[0]);
+  }),
+);
+
 router.post(
   "/",
   asyncHandler(async (req, res) => {
