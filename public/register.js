@@ -7,4 +7,15 @@ $("btn-register").onclick = async () => {
     method: POST,
     body: JSON.stringify({ username: $("username"), password: $("password") }),
   });
+
+  if (res.ok) {
+    $("status").textContent =
+      "Berhasil mendaftar... (Mengalihkan ke login page)";
+    setTimeout(() => {
+      location.href = "/login.html";
+    }, 800);
+  } else {
+    $("status").textContent =
+      "Gagal mendaftar -- Mungkin username sudah di pakai";
+  }
 };
