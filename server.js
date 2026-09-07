@@ -27,7 +27,7 @@ app.post("/", (req, res) => {
 
 app.use((err, req, res, next) => {
   console.log(err);
-  res.status(500).json({ error: "Terjadi kesalahan server..." });
+  res.status(500).json({ error: "Terjadi kesalahan server... -- " + err });
 });
 
 app.use((req, res) => {

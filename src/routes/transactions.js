@@ -39,7 +39,9 @@ router.get(
     );
 
     if (!rows.length)
-      return res.status(404).json({ error: "Transaksi tidak ditemukan..." });
+      return res.status(404).json({
+        error: "Transaksi tidak ditemukan... -- Gagal Mengambil Data",
+      });
     res.json(rows[0]);
   }),
 );
@@ -62,11 +64,55 @@ router.post(
         req.body.type,
         req.body.amount,
         req.body.description ?? null,
-        req.body.tx_date ?? null,
+        req.body.tx_date || null,
       ],
     );
 
     res.status(201).json({ id: result.insertId, type, amount });
+  }),
+);
+
+router.put(
+  "/:id",
+  asyncHandler(async (req, res) => {
+    const { type, amount, description, tx_date } = req.body;
+    const [result] = await pool.query(
+      `UPDATE tb_transactions
+       SET type = ?, amount = ?, description = ?, tx_date = ?
+       WHERE id = ? AND user_id = ?`,
+      [
+        type,
+        amount,
+        description ?? null,
+        tx_date || null,
+        req.params.id,
+        req.user.id,
+      ],
+    );
+
+    if (!result.affectedRows)
+      return res
+        .status(404)
+        .json({ error: "Transaksi tidak ditemukan... -- Gagal Mengedit" });
+
+    res.json({ id: req.params.id, type, amount });
+  }),
+);
+
+router.delete(
+  "/:id",
+  asyncHandler(async (req, res) => {
+    const [result] = await pool.query(
+      `DELETE FROM tb_transactions WHERE id = ? AND user_id = ?`,
+      [req.params.id, req.user.id],
+    );
+
+    if (!result.affectedRows)
+      return res
+        .status(404)
+        .json({ error: "Transaksi tidak ditemukan... -- Gagal Menghapus" });
+
+    res.status(201).end();
   }),
 );
 
