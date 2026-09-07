@@ -6,7 +6,7 @@ import { auth } from "../middlewares/auth.js";
 const router = Router();
 router.use(auth);
 
-// melihat data pengeluaran pemasukan bulanan
+// melihat data pengeluaran pemasukan sesuai bulan yang di inputkan
 router.get(
   "/",
   asyncHandler(async (req, res, next) => {
@@ -28,6 +28,7 @@ router.get(
   }),
 );
 
+// Melihat transaksi dengan lebih spesifik
 router.get(
   "/:id",
   asyncHandler(async (req, res) => {
@@ -46,6 +47,7 @@ router.get(
   }),
 );
 
+// Input new Transaktion
 router.post(
   "/",
   asyncHandler(async (req, res) => {
@@ -72,6 +74,7 @@ router.post(
   }),
 );
 
+// Edit some Transaktion
 router.put(
   "/:id",
   asyncHandler(async (req, res) => {
@@ -99,6 +102,7 @@ router.put(
   }),
 );
 
+// delete feature for some transaktion
 router.delete(
   "/:id",
   asyncHandler(async (req, res) => {
