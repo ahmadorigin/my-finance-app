@@ -1,11 +1,14 @@
 const $ = (id) => document.getElementById(id);
 
-if (token()) location.href = "/dashboard/transaktion.html";
+if (token()) location.href = "/dashboard/transaction.html";
 
 $("btn-register").onclick = async () => {
   const res = await api("/api/auth/register", {
     method: POST,
-    body: JSON.stringify({ username: $("username"), password: $("password") }),
+    body: JSON.stringify({
+      username: $("username").value,
+      password: $("password").value,
+    }),
   });
 
   if (res.ok) {

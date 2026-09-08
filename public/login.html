@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Page</title>
+  </head>
+  <body>
+    <header>
+      <h1>My Finance App</h1>
+    </header>
+
+    <section class="card">
+      <h2>Login</h2>
+      <div class="row">
+        <input
+          type="text"
+          id="username"
+          placeholder="Masukkan Username Anda (Unik)"
+        />
+        <input
+          type="password"
+          id="password"
+          placeholder="Masukkan Password (Rahasia)"
+        />
+        <button id="btn-login">Login</button>
+
+        <p id="status" class="muted"></p>
+        <p class="muted">
+          Belum punya akun? <a href="/register.html">Buat disini...</a>
+        </p>
+      </div>
+    </section>
+
+    <script src="auth.js"></script>
+    <script src="login.js"></script>
+  </body>
+</html>
