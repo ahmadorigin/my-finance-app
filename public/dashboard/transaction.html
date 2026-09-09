@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dahsboard Page</title>
+  </head>
+  <body>
+    <header>
+      <h1>Youkoso...</h1>
+      <a href="/logout.html">Coba Logout nich</a>
+    </header>
+
+    <hr />
+    <br />
+
+    <main>
+      <section class="card">
+        <div class="row">
+          <input type="month" id="month" />
+          <button id="btn-filter">Tampilkan</button>
+
+          <br />
+          <br />
+          <a href="/dashboard/add-transaction.html" class="btn">
+            Tambah Transaksi
+          </a>
+          <span id="totals" class="muted"></span>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Daftar Transaksi</h2>
+        <ul id="list" class="list"></ul>
+      </section>
+    </main>
+
+    <script src="../auth.js"></script>
+    <script src="transaction.js"></script>
+  </body>
+</html>

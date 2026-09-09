@@ -13,15 +13,15 @@ router.get(
     const { month } = req.query;
 
     let sql = `SELECT id, user_id, type, amount, description, 
-                    DATE_FORMAT(tx_date, '%Y%m%d') AS tb_date, created_at 
+                    DATE_FORMAT(tx_date, '%Y%m%d') AS tx_date, created_at 
             FROM tb_transactions WHERE user_id = ?`;
     const params = [req.user.id];
 
     if (month) {
-      sql += ' AND DATE_FORMAT(tb_date, "%Y-%m") = ?';
+      sql += ' AND DATE_FORMAT(tx_date, "%Y-%m") = ?';
       params.push(month);
     }
-    sql += " ORDER BY tb_date DESC, id DESC";
+    sql += " ORDER BY tx_date DESC, id DESC";
 
     const [rows] = await pool.query(sql, params);
     res.json(rows);

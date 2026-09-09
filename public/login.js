@@ -12,11 +12,12 @@ $("btn-login").onclick = async () => {
   });
 
   if (res.ok) {
-    const data = res.json();
+    const data = await res.json();
 
     localStorage.setItem("token", data.token);
     location.href = "/dashboard/transaction.html";
   } else {
-    $("status").textContent = "Login Gagal...";
+    $("status").textContent = "Login Gagal... Error: " + res.json();
+    console.log(res.json());
   }
 };
