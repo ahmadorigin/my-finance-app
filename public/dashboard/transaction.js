@@ -51,7 +51,7 @@ async function load() {
   }
 
   rows.forEach((r) => {
-    const li = createElement("li");
+    const li = document.createElement("li");
     li.innerHTML = `
       <span>
         <span class="${r.type}">${r.type === "income" ? "+" : "-"} ${formatRp(r.amount)}</span>
