@@ -14,7 +14,7 @@ function guard() {
 }
 
 function guardRes(res) {
-  if (res.status() === 401) {
+  if (res.status === 401) {
     localStorage.removeItem("token");
     location.href = "/login.html";
   }

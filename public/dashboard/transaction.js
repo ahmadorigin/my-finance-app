@@ -29,7 +29,7 @@ async function load() {
   console.log(res);
 
   guardRes(res);
-  if (res.status() === 401) return;
+  if (res.status === 401) return;
 
   const rows = await res.json();
   const income = rows
