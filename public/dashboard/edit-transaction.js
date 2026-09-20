@@ -30,4 +30,35 @@ async function init() {
   $("tx_date").value = t.tx_date ? t.tx_date.slice(0, 10) : "";
 }
 
+$("btn-save").onclick = async () => {
+  msg.textContent = "";
+
+  const amount = Number($("amount").value);
+  if (!amount || amount < 0) {
+    msg.textContent = "Nominal wajib di isi dan lebih dari 0 Rupiah...";
+    return;
+  }
+
+  const res = await api("/api/transaction/" + id, {
+    method: "PUT",
+    body: JSON.stringify({
+      type: $("type").value,
+      amount,
+      description: $("description").value || null,
+      tx_date: $("tx_date").value || null,
+    }),
+  });
+
+  guardRes(res);
+  if (res.status === 401) return;
+
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    msg.textContent = err.error || "Gagal menyimpan perubahan...";
+    return;
+  }
+
+  location.href = "/dashboard/transaction.html";
+};
+
 init();
